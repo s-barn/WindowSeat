@@ -1,0 +1,64 @@
+# Build output
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET
+*.dll
+*.exe
+!src/**/Assets/*.ico
+*.pdb
+*.cache
+
+# MSIX / packaging
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+*.msixupload
+
+# Test results
+TestResults/
+coverage/
+*.trx
+*.coveragexml
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Secrets — never commit these
+*.pfx
+*.p12
+secrets.json
+appsettings.*.json
+!appsettings.json

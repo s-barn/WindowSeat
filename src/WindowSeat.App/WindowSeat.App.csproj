@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>WindowSeat.App</RootNamespace>
+    <AssemblyName>WindowSeat</AssemblyName>
+    <ApplicationIcon>Assets\windowseat.ico</ApplicationIcon>
+    <OutputType>WinExe</OutputType>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>stmba</Company>
+    <Product>WindowSeat</Product>
+    <Description>Opens new windows on the monitor you are actively using.</Description>
+    <Copyright>Copyright © 2026</Copyright>
+    <PackageProjectUrl>https://github.com/stmba/WindowSeat</PackageProjectUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowSeat.Core\WindowSeat.Core.csproj" />
+    <ProjectReference Include="..\WindowSeat.Settings\WindowSeat.Settings.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\windowseat.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
