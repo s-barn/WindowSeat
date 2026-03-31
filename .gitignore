@@ -56,6 +56,9 @@ coverage/
 Thumbs.db
 Desktop.ini
 
+# Git worktrees
+.worktrees/
+
 # Secrets — never commit these
 *.pfx
 *.p12
