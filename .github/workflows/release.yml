@@ -30,7 +30,9 @@ jobs:
           echo "VERSION=$version" >> $env:GITHUB_OUTPUT
 
       - name: Restore dependencies
-        run: dotnet restore src/WindowSeat.App/WindowSeat.App.csproj src/WindowSeat.Tests/WindowSeat.Tests.csproj
+        run: |
+          dotnet restore src/WindowSeat.App/WindowSeat.App.csproj
+          dotnet restore src/WindowSeat.Tests/WindowSeat.Tests.csproj
 
       - name: Build (Release)
         run: >
