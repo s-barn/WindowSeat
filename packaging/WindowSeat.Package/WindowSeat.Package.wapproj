@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{D1E2F3A4-0005-0005-0005-000000000005}</ProjectGuid>
     <ProjectTypeGuids>{C7167F0D-BC9F-4E6A-9F78-5F2B13F8E92E};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Package</OutputType>
