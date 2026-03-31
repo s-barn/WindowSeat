@@ -4,7 +4,7 @@
 **Last Updated:** 2026-03-30  
 **License:** MIT  
 **Target Platform:** Windows 11 (primary), Windows 10 22H2+ (best effort)  
-**Stack:** .NET 8 LTS, C#, WPF, PowerShell (build/packaging tooling)
+**Stack:** .NET 10, C#, WPF, PowerShell (build/packaging tooling)
 
 ---
 
