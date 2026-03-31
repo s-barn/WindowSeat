@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
       - name: Extract version from tag
         id: version
         shell: pwsh
@@ -52,15 +55,39 @@ jobs:
           --output publish/
           /p:Version=${{ steps.version.outputs.VERSION }}
 
-      # ── MSIX packaging ────────────────────────────────────────────────────
-      # TODO: Wire up Windows Application Packaging Project (wapproj) here
-      # once packaging/ scaffold is complete. For v1.0, zip the publish output
-      # as a stopgap so users can still download and run.
-
-      - name: Package (stopgap zip)
+      # ── ZIP (GitHub Releases sideload) ────────────────────────────────────
+      - name: Package zip
         shell: pwsh
         run: |
           Compress-Archive -Path publish/* -DestinationPath "WindowSeat-${{ steps.version.outputs.VERSION }}-win-x64.zip"
+
+      # ── MSIX (Microsoft Store submission) ─────────────────────────────────
+      - name: Patch manifest version
+        shell: pwsh
+        run: |
+          $v = "${{ steps.version.outputs.VERSION }}.0"
+          $path = "packaging/WindowSeat.Package/Package.appxmanifest"
+          (Get-Content $path -Raw) `
+            -replace '(?<=<Identity[^>]*Version=")[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', $v |
+            Set-Content $path
+          Write-Host "Manifest version set to $v"
+
+      - name: Build MSIX package
+        shell: pwsh
+        run: |
+          msbuild packaging/WindowSeat.Package/WindowSeat.Package.wapproj `
+            /p:Configuration=Release `
+            /p:Platform=x64 `
+            /p:AppxPackageSigningEnabled=false `
+            /p:AppxAutoIncrementPackageRevision=false `
+            /p:GenerateTestArtifacts=false `
+            "/p:AppxPackageDir=${{ github.workspace }}\artifacts\msix\\"
+
+      - name: Upload MSIX (Store submission artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: WindowSeat-${{ steps.version.outputs.VERSION }}-store-package
+          path: artifacts/msix/*.msix
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
