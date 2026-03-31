@@ -35,11 +35,9 @@ jobs:
           dotnet restore src/WindowSeat.Tests/WindowSeat.Tests.csproj
 
       - name: Build (Release)
-        run: >
-          dotnet build src/WindowSeat.App/WindowSeat.App.csproj
-          --configuration Release
-          --no-restore
-          /p:Version=${{ steps.version.outputs.VERSION }}
+        run: |
+          dotnet build src/WindowSeat.App/WindowSeat.App.csproj --configuration Release --no-restore /p:Version=${{ steps.version.outputs.VERSION }}
+          dotnet build src/WindowSeat.Tests/WindowSeat.Tests.csproj --configuration Release --no-restore
 
       - name: Run tests
         run: >
