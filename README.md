@@ -59,7 +59,7 @@ For advanced configuration see [docs/power-user-guide.md](docs/power-user-guide.
 ## Building from Source
 
 **Prerequisites**
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - Visual Studio 2022 (17.8+) with the **Windows application development** workload, or VS Code with the C# Dev Kit extension
 
 **Clone and build**
