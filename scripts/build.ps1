@@ -32,6 +32,8 @@ $RepoRoot   = Split-Path $PSScriptRoot -Parent
 $SolutionFile = Join-Path $RepoRoot 'WindowSeat.sln'
 $PublishDir = Join-Path $RepoRoot 'publish'
 $TestProject = Join-Path $RepoRoot 'src/WindowSeat.Tests/WindowSeat.Tests.csproj'
+$ArtifactsDir = Join-Path $RepoRoot 'artifacts'
+$WaprojFile   = Join-Path $RepoRoot 'packaging\WindowSeat.Package\WindowSeat.Package.wapproj'
 
 function Write-Step([string]$message) {
     Write-Host "`n==> $message" -ForegroundColor Cyan
@@ -66,10 +68,39 @@ if ($Package) {
         --output $PublishDir
     if ($LASTEXITCODE -ne 0) { throw "Publish failed." }
 
-    Write-Step "Creating zip"
+    Write-Step "Creating ZIP"
     $zipPath = Join-Path $RepoRoot "WindowSeat-local-win-x64.zip"
     Compress-Archive -Path "$PublishDir/*" -DestinationPath $zipPath -Force
-    Write-Host "Package created: $zipPath" -ForegroundColor Green
+    Write-Host "ZIP created: $zipPath" -ForegroundColor Green
+
+    # ── MSIX (requires VS 2022 with Windows application development workload) ──
+    Write-Step "Building MSIX package"
+    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    if (-not (Test-Path $vswhere)) {
+        Write-Warning "vswhere.exe not found — skipping MSIX. Install Visual Studio 2022 to enable local MSIX packaging."
+    } else {
+        $msbuild = & $vswhere -latest -requires Microsoft.Component.MSBuild `
+            -find MSBuild\**\Bin\MSBuild.exe | Select-Object -First 1
+        if (-not $msbuild) {
+            Write-Warning "MSBuild not found via vswhere — skipping MSIX."
+        } else {
+            $msixOut = Join-Path $ArtifactsDir 'msix'
+            if (Test-Path $msixOut) { Remove-Item $msixOut -Recurse -Force }
+            New-Item -ItemType Directory -Force -Path $msixOut | Out-Null
+
+            & $msbuild $WaprojFile `
+                /p:Configuration=$Configuration `
+                /p:Platform=x64 `
+                /p:AppxPackageSigningEnabled=false `
+                /p:AppxAutoIncrementPackageRevision=false `
+                /p:GenerateTestArtifacts=false `
+                "/p:AppxPackageDir=$msixOut\\"
+            if ($LASTEXITCODE -ne 0) { throw "MSIX build failed." }
+
+            $msix = Get-ChildItem $msixOut -Filter *.msix | Select-Object -First 1
+            Write-Host "MSIX created: $($msix.FullName)" -ForegroundColor Green
+        }
+    }
 }
 
 Write-Host "`nBuild complete." -ForegroundColor Green

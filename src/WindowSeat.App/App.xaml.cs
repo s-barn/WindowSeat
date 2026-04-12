@@ -31,7 +31,7 @@ public partial class App : Application
             ? new CursorMonitorDetector()
             : new TaskbarMonitorDetector();
 
-        _mover    = new WindowMover(_settingsService, detector);
+        _mover    = new WindowMover(detector);
         _listener = new WindowEventListener();
         _listener.WindowShown += OnWindowShown;
         _listener.Start();

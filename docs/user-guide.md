@@ -20,13 +20,26 @@ When you open an application on a multi-monitor Windows setup, Windows often ign
 
 ## Installation
 
+### Microsoft Store (Recommended)
+
+1. Open the **Microsoft Store** on your PC
+2. Search for **WindowSeat** or follow the link from the [GitHub Releases page](https://github.com/stmba/WindowSeat/releases)
+3. Click **Get** (or **Install**)
+4. WindowSeat starts automatically — look for the 🪑 icon in your system tray
+
+The Store version updates automatically and can be uninstalled cleanly from Settings → Apps.
+
+### ZIP Download (Technical Users / Sideload)
+
+If you prefer not to use the Store:
+
 1. Go to the [Releases page](https://github.com/stmba/WindowSeat/releases) on GitHub
-2. Download the latest `WindowSeat.msix` file
-3. Double-click the downloaded file
-4. If Windows SmartScreen appears, click **More info** then **Run anyway**  
-   _(This warning appears because WindowSeat is not yet signed with a paid certificate. The source code is fully open for review at github.com/stmba/WindowSeat.)_
-5. Follow the installer prompts and click **Install**
-6. WindowSeat starts automatically — look for the 🪑 icon in your system tray
+2. Download the latest `WindowSeat-win-x64.zip`
+3. Extract the ZIP to a folder of your choice (e.g. `C:\Program Files\WindowSeat\`)
+4. Run `WindowSeat.exe`
+5. Look for the 🪑 icon in your system tray
+
+> **Note:** The ZIP version has no installer. There is no entry in Add/Remove Programs. Auto-start at login works via the in-app Settings toggle as normal.
 
 ---
 
@@ -91,11 +104,19 @@ Click **Save** to apply your changes. Click **Cancel** to discard them.
 
 ## Uninstalling
 
+### Store version
+
 1. Open **Settings → Apps → Installed apps**
 2. Search for **WindowSeat**
 3. Click the three-dot menu and choose **Uninstall**
 
-WindowSeat's settings file at `%AppData%\WindowSeat\settings.json` is not removed by the uninstaller. You can delete this folder manually if you want a complete clean removal.
+### ZIP version
+
+1. Right-click the 🪑 tray icon and choose **Exit**
+2. Delete the folder you extracted WindowSeat into
+3. If you enabled auto-start, open **Task Manager → Startup apps** and remove the WindowSeat entry (or toggle it off in Settings before exiting)
+
+In both cases, WindowSeat's settings file at `%AppData%\WindowSeat\settings.json` is not removed automatically. Delete that folder manually if you want a complete clean removal.
 
 ---
 
