@@ -65,3 +65,6 @@ Desktop.ini
 secrets.json
 appsettings.*.json
 !appsettings.json
+
+# Claude Code per-machine settings (local paths, tool allowlists)
+.claude/settings.local.json
